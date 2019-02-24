@@ -12,6 +12,7 @@ import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.vu.tab.servy.bean.CommonBean;
 import com.vu.tab.servy.bean.Converter;
 
 import java.io.BufferedReader;
@@ -22,13 +23,16 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 public class MainActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
     private Spinner spinner, spinnerNBF;
     private static final String[] paths = {"item 1", "item 2", "item 3"};
     private static List<String> bankList=new ArrayList<>();
-    private static List<String> NbfiList=new ArrayList<>();
+    private static List<String> nbfiList=new ArrayList<>();
     ProgressDialog pd;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,27 +59,16 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         });
 
 
-        bankList.add("AB Bank Ltd");
-        bankList.add("Dhaka Bank Ltd");
-        bankList.add("Asia Bank Ltd");
-        bankList.add("Test Bank Ltd");
-
-
-        NbfiList.add("NBF Ltd");
-        NbfiList.add("NBF Ltd");
-        NbfiList.add("NBF Ltd");
-        NbfiList.add("NBF Ltd");
-
-
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(MainActivity.this,
                 android.R.layout.simple_spinner_item,bankList);
+        bankList.clear();
 
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
         spinner.setOnItemSelectedListener(this);
 
         ArrayAdapter<String> adapterNBF = new ArrayAdapter<String>(MainActivity.this,
-                android.R.layout.simple_spinner_item,NbfiList);
+                android.R.layout.simple_spinner_item,nbfiList);
 
         adapterNBF.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerNBF.setAdapter(adapterNBF);
@@ -154,14 +147,31 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         @Override
         protected void onPostExecute(String result) {
             super.onPostExecute(result);
-            Toast.makeText(getApplicationContext(),result,Toast.LENGTH_LONG).show();
             com.google.gson.Gson gson = new com.google.gson.Gson();
 
 //To convert json string to class use fromJson
-            Converter obj = gson.fromJson(result, Converter.class);
+            Converter converter = gson.fromJson(result, Converter.class);
+            if(converter.type.trim().equals("branch_bank")){
+                Map<Integer,Integer> bankMap=new HashMap<>();
+                for (CommonBean commonBean:converter.list) {
+                    if(!bankMap.containsKey(commonBean.id)){
+                        bankList.add(commonBean.name);
+                        bankMap.put(commonBean.id,commonBean.id);
+                    }
+
+                }
+            }
+            if(converter.type.trim().equals("branch_nbfi")){
+                for (CommonBean commonBean:converter.list) {
+                    nbfiList.add(commonBean.name);
+                }
+            }
+
             if (pd.isShowing()){
                 pd.dismiss();
             }
+
+            String test="";
 
         }
     }

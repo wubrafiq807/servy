@@ -5,14 +5,10 @@ import java.util.List;
 
 public class Converter {
 
-    List<CommonBean> bankBranchList=new ArrayList<>();
-    String status;
+    public  List<CommonBean> list=new ArrayList<>();
+    public  String status;
+    public  String type;
 
-    public List<CommonBean> getList() {
-        return bankBranchList;
-    }
 
-    public void setList(List<CommonBean> list) {
-        this.bankBranchList = list;
-    }
+
 }
