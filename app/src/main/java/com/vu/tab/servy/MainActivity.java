@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.LinearLayout;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -33,6 +34,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     private static final String[] paths = {"item 1", "item 2", "item 3"};
     private static List<String> bankList=new ArrayList<>();
     private static List<String> nbfiList=new ArrayList<>();
+    private LinearLayout bankSection,nbfiSection,customerSection,landSection,buildingSection,flatSection,machinarySection;
     ProgressDialog pd;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,18 +43,84 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         spinner = (Spinner)findViewById(R.id.bank_spiner);
         spinnerNBF = (Spinner)findViewById(R.id.nbfi_spiner);
         RadioGroup rg = (RadioGroup) findViewById(R.id.radio_group_appType);
+        RadioGroup propRg = (RadioGroup) findViewById(R.id.radio_group_propType);
+        // liner layout for application type and ui section show hide
+        bankSection=(LinearLayout)this.findViewById(R.id.bank_section);
+        nbfiSection=(LinearLayout)this.findViewById(R.id.nbfi_section);
+        customerSection=(LinearLayout)this.findViewById(R.id.customer_section);
+        bankSection.setVisibility(LinearLayout.GONE);
+        nbfiSection.setVisibility(LinearLayout.GONE);
+        customerSection.setVisibility(LinearLayout.GONE);
+
+        // liner layout for property type and application ui show hide
+        landSection=(LinearLayout)this.findViewById(R.id.land_section);
+        buildingSection=(LinearLayout)this.findViewById(R.id.building_section);
+        flatSection=(LinearLayout)this.findViewById(R.id.flat_section);
+        machinarySection=(LinearLayout)this.findViewById(R.id.machinary_section);
+        landSection.setVisibility(LinearLayout.GONE);
+        buildingSection.setVisibility(LinearLayout.GONE);
+        flatSection.setVisibility(LinearLayout.GONE);
+        machinarySection.setVisibility(LinearLayout.GONE);
+
+        // bank and Nbfi list loading from API
+
+        //new JsonTask().execute("http://10.44.22.212:8080/srvm/v1/getList?type=BRBANK");
+       //new JsonTask().execute("http://10.44.22.212:8080/srvm/v1/getList?type=BRNBFI");
+
         rg.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener()
         {
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 switch(checkedId){
                     case R.id.radio_bank:
-                        new JsonTask().execute("http://10.44.22.212:8080/srvm/v1/getList?type=BRBANK");
+                        bankSection.setVisibility(LinearLayout.VISIBLE);
+                        nbfiSection.setVisibility(LinearLayout.GONE);
+                        customerSection.setVisibility(LinearLayout.GONE);
+                      //  new JsonTask().execute("http://10.44.22.212:8080/srvm/v1/getList?type=BRBANK");
                         break;
                     case R.id.radio_nbfi:
-                        new JsonTask().execute("http://10.44.22.212:8080/srvm/v1/getList?type=BRNBFI");
+                        bankSection.setVisibility(LinearLayout.GONE);
+                        nbfiSection.setVisibility(LinearLayout.VISIBLE);
+                        customerSection.setVisibility(LinearLayout.GONE);
+                      //  new JsonTask().execute("http://10.44.22.212:8080/srvm/v1/getList?type=BRNBFI");
                         break;
                     case R.id.radio_customer:
+                        bankSection.setVisibility(LinearLayout.GONE);
+                        nbfiSection.setVisibility(LinearLayout.GONE);
+                        customerSection.setVisibility(LinearLayout.VISIBLE);
 
+                        break;
+                }
+            }
+        });
+        propRg.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener()
+        {
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                switch(checkedId){
+                    case R.id.radio_building:
+                        landSection.setVisibility(LinearLayout.GONE);
+                        buildingSection.setVisibility(LinearLayout.VISIBLE);
+                        flatSection.setVisibility(LinearLayout.GONE);
+                        machinarySection.setVisibility(LinearLayout.GONE);
+                        break;
+                    case R.id.radio_flat:
+                        landSection.setVisibility(LinearLayout.GONE);
+                        buildingSection.setVisibility(LinearLayout.GONE);
+                        flatSection.setVisibility(LinearLayout.VISIBLE);
+                        machinarySection.setVisibility(LinearLayout.GONE);
+                        break;
+                    case R.id.radio_land:
+                        landSection.setVisibility(LinearLayout.VISIBLE);
+                        buildingSection.setVisibility(LinearLayout.GONE);
+                        flatSection.setVisibility(LinearLayout.GONE);
+                        machinarySection.setVisibility(LinearLayout.GONE);
+
+                        break;
+                    case R.id.radio_machinary:
+
+                        landSection.setVisibility(LinearLayout.GONE);
+                        buildingSection.setVisibility(LinearLayout.GONE);
+                        flatSection.setVisibility(LinearLayout.GONE);
+                        machinarySection.setVisibility(LinearLayout.VISIBLE);
                         break;
                 }
             }

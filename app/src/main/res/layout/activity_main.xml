@@ -91,6 +91,7 @@
 
 
                 <LinearLayout
+                    android:id="@+id/nbfi_section"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
@@ -221,6 +222,7 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/bank_section"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
@@ -351,6 +353,7 @@
 
 
                 <LinearLayout
+                    android:id="@+id/customer_section"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
@@ -504,6 +507,7 @@
                     android:orientation="horizontal">
 
                     <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
+                       android:id="@+id/radio_group_propType"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
 
@@ -545,6 +549,7 @@
 
 
                 <LinearLayout
+                    android:id="@+id/land_section"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
@@ -629,7 +634,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_gravity="center_horizontal"
-                            android:hint="Land Area"
+                            android:hint="Land Mouza"
                             android:inputType="numberDecimal"
                             android:textSize="16sp" />
 
@@ -678,6 +683,7 @@
 
 
                 <LinearLayout
+                    android:id="@+id/building_section"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
@@ -802,6 +808,7 @@
 
 
                 <LinearLayout
+                    android:id="@+id/machinary_section"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
@@ -919,6 +926,7 @@
 
 
                 <LinearLayout
+                    android:id="@+id/flat_section"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
